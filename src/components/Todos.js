@@ -1,4 +1,5 @@
 import React from "react";
+import * as TodoActions from "../actions/TodoActions";
 import TodoList from "./TodoList";
 
 export default class Todos extends React.Component {
@@ -11,8 +12,9 @@ export default class Todos extends React.Component {
 
   handleClick(number, status) {
     const todos = this.state.todos.slice();
-    todos.find(todo => todo.number === number).status = status;
-    this.setState({ todos: todos });
+    const todo = todos.find(todo => todo.number === number)
+    todo.status = status;
+    TodoActions.updateTodo(todo);
   }
 
   render() {

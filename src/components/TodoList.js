@@ -20,7 +20,7 @@ export default class TodoList extends React.Component {
         <li key={index} >
           { item.todoText } :
           <button
-            onClick={() => this.props.handleClick(item.number, desc)}
+            onClick={() => this.props.handleClick(item.id, desc)}
           >{desc}</button>
         </li>
       );

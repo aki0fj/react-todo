@@ -10,9 +10,9 @@ export default class Todos extends React.Component {
     };
   }
 
-  handleClick(number, status) {
+  handleClick(id, status) {
     const todos = this.state.todos.slice();
-    const todo = todos.find(todo => todo.number === number)
+    const todo = todos.find(todo => todo.id === id)
     todo.status = status;
     TodoActions.updateTodo(todo);
   }

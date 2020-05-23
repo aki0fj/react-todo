@@ -22,6 +22,7 @@ export default class App extends React.Component {
   componentDidMount() {
     TodoStore.on("change", this.getTodos);
     console.log("TodoStore.listenerCount", TodoStore.listenerCount("change"));
+    TodoActions.getAllTodo();
   }
 
   componentWillUnmount() {

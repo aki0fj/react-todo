@@ -1,45 +1,31 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import TodoStore from "../stores/TodoStore";
 import * as TodoActions from "../actions/TodoActions";
 import InputForm from "./InputForm";
 import MemberList from "./MemberList";
 
-export default class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.getTodos = this.getTodos.bind(this);
-    this.state = {
-      todos: TodoStore.getAll(),
-    };
-  }
+const App = () => {
+  const [todos, setTodos] = useState(TodoStore.getAll())
 
-  getTodos() {
-    this.setState({
-      todos: TodoStore.getAll()
-    });
-  }
+  function handleSetTodos() { setTodos(TodoStore.getAll()) }
 
-  componentDidMount() {
-    TodoStore.on("change", this.getTodos);
-    console.log("TodoStore.listenerCount", TodoStore.listenerCount("change"));
+  useEffect(() => {
+    // event DidMount
+    TodoStore.on("change", handleSetTodos);
     TodoActions.getAllTodo();
-  }
+    return function cleanup() {
+      // event WillUnMount
+      TodoStore.removeListener("change", handleSetTodos);
+    };
+  }, []);
 
-  componentWillUnmount() {
-    TodoStore.removeListener("change", this.getTodos);
-  }
-
-  handleClick(formData) {
-    TodoActions.createTodo(formData);
-  }
-
-  render() {
-    return (
-      <div>
-        <InputForm onClick={(formData) => this.handleClick(formData)} />
-        <hr/>
-        <MemberList todos={this.state.todos} />
-      </div>
-    );
-  }
+  return (
+    <div>
+      <InputForm onClick={(formData) => TodoActions.createTodo(formData)} />
+      <hr/>
+      <MemberList todos={todos} />
+    </div>
+  )
 }
+
+export default App

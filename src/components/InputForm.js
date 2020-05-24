@@ -1,61 +1,50 @@
-import React from "react";
+import React, { useState } from "react";
 
-export default class InputForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: "",
-      todoText: "",
-      status: "entry",
-      nameList: ['member A', 'member B', 'member C'],
-    };
-  }
+const InputForm = (args) => {
+  const status = "entry";
+  const nameList = ['member A', 'member B', 'member C'];
 
-  handleChangeName(e) {
-    this.setState({
-      name: e.target.value,
-    })
-  }
+  const [name, setName] = useState("");
+  const [todoText, setTodoText] = useState("");
 
-  handleChangeTodoText(e) {
-    this.setState({
-      todoText: e.target.value,
-    })
-  }
+  const handleChangeName = (e) => setName(e.target.value);
+  const handleChangeTodoText = (e) => setTodoText(e.target.value);
 
-  render() {
-    const nameList = this.state.nameList.map((item, index) => {
-      return (
-        <option key={index} value={item} />
-      );
-    });
-    const formData = {
-      name: this.state.name,
-      todoText: this.state.todoText,
-      status: this.state.status,
-    };
+  const nameListTags = nameList.map((item, index) => {
     return (
-      <div>
-        <label>
-          Name:
-          <input id="name" list="name_list"
-           onChange={this.handleChangeName.bind(this)}
-          />
-          <datalist id="name_list">
-            {nameList}
-          </datalist>
-        </label>
-        <p>Todo:</p>
-        <textarea id="todoText" rows="4" cols="40"
-           defaultValue="Input todos here"
-           onChange={this.handleChangeTodoText.bind(this)}
-        />
-        <div>
-          <button onClick={() => this.props.onClick(formData)}>
-            Submit
-          </button>
-        </div>
-      </div>
+      <option key={index} value={item} />
     );
-  }
+  });
+
+  const formData = {
+    name: name,
+    todoText: todoText,
+    status: status,
+  };
+
+  return (
+    <div>
+      <label>
+        Name:
+        <input id="name" list="name_list"
+         onChange={handleChangeName}
+        />
+        <datalist id="name_list">
+          {nameListTags}
+        </datalist>
+      </label>
+      <p>Todo:</p>
+      <textarea id="todoText" rows="4" cols="40"
+         defaultValue="Input todos here"
+         onChange={handleChangeTodoText}
+      />
+      <div>
+        <button onClick={() => args.onClick(formData)}>
+          Submit
+        </button>
+      </div>
+    </div>
+  );
 }
+
+export default InputForm

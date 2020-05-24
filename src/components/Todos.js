@@ -2,47 +2,39 @@ import React from "react";
 import * as TodoActions from "../actions/TodoActions";
 import TodoList from "./TodoList";
 
-export default class Todos extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      todos: this.props.todos
-    };
-  }
+const Todos = (args) => {
+  const todos = args.todos;
 
-  handleClick(id, status) {
-    const todos = this.state.todos.slice();
+  const handleClick = (id, status) => {
     const todo = todos.find(todo => todo.id === id)
     todo.status = status;
     TodoActions.updateTodo(todo);
   }
 
-  render() {
-    const todos = this.props.todos;
-    const entry = todos.filter(todo => todo.status === "entry");
-    const progress = todos.filter(todo => todo.status === "progress");
-    const done = todos.filter(todo => todo.status === "done");
-    const handleClick = this.handleClick.bind(this);
+  const entry = todos.filter(todo => todo.status === "entry");
+  const progress = todos.filter(todo => todo.status === "progress");
+  const done = todos.filter(todo => todo.status === "done");
 
-    return (
-      <div>
-        <table border="1">
-          <thead>
-            <tr>
-              <th>Entry</th>
-              <th>Progress</th>
-              <th>Done</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><TodoList todos={entry} handleClick={handleClick} /></td>
-              <td><TodoList todos={progress} handleClick={handleClick} /></td>
-              <td><TodoList todos={done} handleClick={handleClick} /></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    );
-  }
+  return (
+    <div>
+      <table border="1">
+        <thead>
+          <tr>
+            <th>Entry</th>
+            <th>Progress</th>
+            <th>Done</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><TodoList todos={entry} handleClick={handleClick} /></td>
+            <td><TodoList todos={progress} handleClick={handleClick} /></td>
+            <td><TodoList todos={done} handleClick={handleClick} /></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  );
 }
+
+export default Todos

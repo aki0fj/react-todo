@@ -5,7 +5,6 @@ class TodoStore extends EventEmitter {
   constructor() {
     super();
     this.todos = [];
-    this.todoNumber = 0;
   }
 
   getAll() {

@@ -21,7 +21,7 @@ const App = () => {
 
   return (
     <div>
-      <InputForm onClick={(formData) => TodoActions.createTodo(formData)} />
+      <InputForm />
       <hr/>
       <MemberList todos={todos} />
     </div>

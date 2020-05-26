@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import * as TodoActions from "../actions/TodoActions";
 
-const InputForm = (args) => {
+const InputForm = () => {
   const status = "entry";
   const nameList = ['member A', 'member B', 'member C'];
 
@@ -16,11 +17,11 @@ const InputForm = (args) => {
     );
   });
 
-  const formData = {
+  const handleClick = () => TodoActions.createTodo({
     name: name,
     todoText: todoText,
     status: status,
-  };
+  });
 
   return (
     <div>
@@ -39,7 +40,7 @@ const InputForm = (args) => {
          onChange={handleChangeTodoText}
       />
       <div>
-        <button onClick={() => args.onClick(formData)}>
+        <button onClick={handleClick}>
           Submit
         </button>
       </div>

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import * as TodoActions from "../actions/TodoActions";
 
-const InputForm = () => {
+const InputForm = ({members}) => {
   const status = "entry";
-  const nameList = ['member A', 'member B', 'member C'];
+  const nameList = members.map(item => item.name)
 
   const [name, setName] = useState("");
   const [todoText, setTodoText] = useState("");
